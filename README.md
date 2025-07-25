@@ -29,6 +29,12 @@ poetry install
 poetry run python scripts/download_data.py
 ```
 
+## Building the DB
+
+```bash
+poetry run python scripts/build_db.py
+```
+
 ## Run training
 
 ```bash
