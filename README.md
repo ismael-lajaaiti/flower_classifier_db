@@ -23,6 +23,12 @@ cd flower_classifier_db
 poetry install
 ```
 
+## Download data
+
+```bash
+poetry run python scripts/download_data.py
+```
+
 ## Run training
 
 ```bash
