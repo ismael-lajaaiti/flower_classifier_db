@@ -1,0 +1,29 @@
+[project]
+name = "flower_classifier_db"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Ismaël Lajaaiti",email = "ismael.lajaaiti@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4"
+dependencies = [
+    "tensorflow-macos (>=2.16.2,<3.0.0)",
+    "matplotlib (>=3.10.3,<4.0.0)",
+    "tensorflow-datasets (>=4.9.9,<5.0.0)",
+    "pandas (>=2.3.1,<3.0.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "sqlalchemy (>=2.0.41,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "flower_classifier_db", from = "src"}]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
