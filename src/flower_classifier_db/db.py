@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, Float, String
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 Base = declarative_base()
@@ -12,6 +12,17 @@ class ImageMetadata(Base):
     label = Column(String, nullable=False)
     width = Column(Integer)
     height = Column(Integer)
+
+
+class TrainingLog(Base):
+    __tablename__ = "training_logs"
+
+    id = Column(Integer, primary_key=True)
+    epoch = Column(Integer, nullable=False)
+    train_loss = Column(Float, nullable=False)
+    train_accuracy = Column(Float, nullable=False)
+    val_loss = Column(Float, nullable=False)
+    val_accuracy = Column(Float, nullable=False)
 
 
 def get_engine(db_path="data/flowers.db"):

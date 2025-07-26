@@ -1,4 +1,4 @@
-# Byte-compiled / cached / virtualenv files
+# Byte-compiled / cached / virtualenv files.
 __pycache__/
 *.py[cod]
 *.egg
@@ -6,11 +6,12 @@ __pycache__/
 dist/
 build/
 
-# Poetry virtual environment (in-project)
+# Poetry virtual environment (in-project).
 .venv/
 
-# VSCode and system files
+# System files.
 .DS_Store
 
-# Data
+# Data.
 data/
+models/
