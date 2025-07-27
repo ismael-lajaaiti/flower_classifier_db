@@ -1,8 +1,13 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from flower_classifier_db.data import get_dataloaders
-from flower_classifier_db.db import get_engine, get_session, TrainingLog
+from flower_classifier_db.dataloader import get_dataloaders_from_csv
+from flower_classifier_db.database import (
+    get_engine,
+    get_session,
+    TrainingLog,
+    ImageMetadata,
+)
 from pathlib import Path
 from tqdm import tqdm
 
@@ -10,6 +15,7 @@ from tqdm import tqdm
 db_path = str(Path("data/flowers.db"))
 engine = get_engine(db_path)
 session = get_session(engine)
+class_names = session.query(ImageMetadata.label).distinct().all()
 
 
 def log_epoch(session, epoch, train_loss, train_acc, val_loss, val_acc):
@@ -25,13 +31,14 @@ def log_epoch(session, epoch, train_loss, train_acc, val_loss, val_acc):
 
 
 # 1. Configuration.
-batch_size = 32
 epochs = 3
 data_dir = str(Path("data/tf_flowers"))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # 2. Load data.
-train_loader, val_loader, class_names = get_dataloaders(data_dir, batch_size=batch_size)
+batch_size = 32
+split_file = "data/split.csv"
+train_loader, val_loader = get_dataloaders_from_csv(split_file, batch_size=batch_size)
 
 # 3. Model setup.
 model = torch.hub.load("pytorch/vision:v0.10.0", "resnet18", pretrained=True)
@@ -51,8 +58,8 @@ for epoch in range(epochs):
 
     print(f"\nEpoch {epoch + 1}/{epochs} - Training")
     for images, labels in tqdm(train_loader, desc="Training", leave=False):
-        images, labels = images.to(device), labels.to(device)
-
+        images = images.to(device)
+        labels = labels.to(device)
         optimizer.zero_grad()
         outputs = model(images)
         loss = criterion(outputs, labels)

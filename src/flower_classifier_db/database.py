@@ -12,6 +12,7 @@ class ImageMetadata(Base):
     label = Column(String, nullable=False)
     width = Column(Integer)
     height = Column(Integer)
+    split = Column(String)
 
 
 class TrainingLog(Base):
@@ -23,6 +24,17 @@ class TrainingLog(Base):
     train_accuracy = Column(Float, nullable=False)
     val_loss = Column(Float, nullable=False)
     val_accuracy = Column(Float, nullable=False)
+
+
+class Prediction(Base):
+    __tablename__ = "predictions"
+
+    id = Column(Integer, primary_key=True)
+    image_id = Column(Integer, nullable=False)
+    true_label = Column(String, nullable=False)
+    predicted_label = Column(String, nullable=False)
+    confidence = Column(Float, nullable=True)  # optional: softmax prob
+    # model_name = Column(String, nullable=True)  # optional: for future experiments
 
 
 def get_engine(db_path="data/flowers.db"):

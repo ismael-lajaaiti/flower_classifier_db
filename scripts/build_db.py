@@ -1,4 +1,4 @@
-from flower_classifier_db.db import (
+from flower_classifier_db.database import (
     get_engine,
     create_tables,
     get_session,

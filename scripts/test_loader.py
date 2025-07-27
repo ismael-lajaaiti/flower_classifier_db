@@ -1,6 +1,9 @@
-from flower_classifier_db.data import get_dataloaders
+from flower_classifier_db.dataloader import get_dataloaders_from_csv
 
-train_loader, val_loader, classes = get_dataloaders()
+CSV_PATH = "data/split.csv"
+
+train_loader, val_loader = get_dataloaders_from_csv(CSV_PATH)
+
 print(f"[x] Loaded {len(classes)} classes: {classes}")
 
 images, labels = next(iter(train_loader))
