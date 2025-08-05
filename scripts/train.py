@@ -31,7 +31,7 @@ def log_epoch(session, epoch, train_loss, train_acc, val_loss, val_acc):
 
 
 # 1. Configuration.
-epochs = 3
+epochs = 2
 data_dir = str(Path("data/tf_flowers"))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -39,6 +39,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 batch_size = 32
 split_file = "data/split.csv"
 train_loader, val_loader = get_dataloaders_from_csv(split_file, batch_size=batch_size)
+print(next(iter(train_loader)))
 
 # 3. Model setup.
 model = torch.hub.load("pytorch/vision:v0.10.0", "resnet18", pretrained=True)
@@ -57,9 +58,8 @@ for epoch in range(epochs):
     train_correct = 0
 
     print(f"\nEpoch {epoch + 1}/{epochs} - Training")
-    for images, labels in tqdm(train_loader, desc="Training", leave=False):
-        images = images.to(device)
-        labels = labels.to(device)
+    for images, labels, _ in tqdm(train_loader, desc="Training", leave=False):
+        images, labels = images.to(device), labels.to(device)
         optimizer.zero_grad()
         outputs = model(images)
         loss = criterion(outputs, labels)
@@ -79,7 +79,7 @@ for epoch in range(epochs):
 
     print(f"Validating..")
     with torch.no_grad():
-        for images, labels in val_loader:
+        for images, labels, _ in val_loader:
             images, labels = images.to(device), labels.to(device)
             outputs = model(images)
             loss = criterion(outputs, labels)

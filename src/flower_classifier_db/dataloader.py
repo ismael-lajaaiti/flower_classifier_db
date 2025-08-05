@@ -18,9 +18,10 @@ class FlowerDataset(Dataset):
         img_path = Path("data") / row["path"]
         image = Image.open(img_path).convert("RGB")
         label_id = int(row["label_id"])
+        img_id = row.id
         if self.transform:
             image = self.transform(image)
-        return image, label_id
+        return image, label_id, img_id
 
 
 def get_dataloaders_from_csv(split_csv, batch_size=32):

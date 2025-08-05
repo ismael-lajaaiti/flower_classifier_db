@@ -32,21 +32,22 @@ model.to(device)
 model.eval()
 
 # 4. Predict and store predictions.
-for images, labels in val_loader:
+for images, labels, ids in val_loader:
     images = images.to(device)
     outputs = model(images)
     probs = torch.softmax(outputs, dim=1)
     confidences, preds = torch.max(probs, dim=1)
 
     for i in range(len(images)):
-        image_id = int(val_df.iloc[i]["id"])  # get image ID from val_df
+        img_id = ids[i].item()
+        path = df[df.id == img_id].path
         true_label = id_to_label[labels[i].item()]
         predicted_label = id_to_label[preds[i].item()]
         confidence = confidences[i].item()
 
         session.add(
             Prediction(
-                image_id=image_id,
+                image_id=img_id,
                 true_label=true_label,
                 predicted_label=predicted_label,
                 confidence=confidence,
