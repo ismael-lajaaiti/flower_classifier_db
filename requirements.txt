@@ -1,6 +1,6 @@
 streamlit
 duckdb
-tensorflow-cpu>=2.12
+tensorflow
 tensorflow-datasets
 pandas
 numpy
