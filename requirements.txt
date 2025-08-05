@@ -94,7 +94,7 @@ tensorboard-data-server==0.7.2 ; python_version >= "3.12" and python_version < "
 tensorboard==2.16.2 ; python_version >= "3.12" and python_version < "4" and (platform_system == "Darwin" or platform_system == "Windows") and (platform_machine == "arm64" or platform_system == "Windows")
 tensorflow-datasets==4.9.9 ; python_version >= "3.12" and python_version < "4"
 tensorflow-intel==2.16.2 ; python_version >= "3.12" and python_version < "4" and platform_system == "Windows"
-tensorflow==2.16.1 ; python_version >= "3.12" and python_version < "4"
+tensorflow==2.20.0 ; python_version >= "3.12" and python_version < "4"
 tensorflow-metadata==1.17.2 ; python_version >= "3.12" and python_version < "4"
 tensorflow==2.16.2 ; python_version >= "3.12" and python_version < "4" and platform_system == "Darwin" and platform_machine == "arm64"
 termcolor==3.1.0 ; python_version >= "3.12" and python_version < "4"
