@@ -1,20 +1,13 @@
 import streamlit as st
 import pandas as pd
 import duckdb
-from flower_classifier_db.database import (
-    get_session,
-    get_engine,
-    ImageMetadata,
-    Prediction,
-)
-from sqlalchemy import select
-from PIL import Image
-from pathlib import Path
+import sys
+import os
+
+# Add the src/ folder to Python's import path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 DB_PATH = "data/flowers.db"
-
-engine = get_engine()
-session = get_session(engine)
 
 st.title("Flower classifier")
 
