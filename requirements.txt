@@ -43,7 +43,6 @@ markdown==3.8.2 ; python_version >= "3.12" and python_version < "4" and (platfor
 markupsafe==3.0.2 ; python_version >= "3.12" and python_version < "4"
 matplotlib==3.10.3 ; python_version >= "3.12" and python_version < "4"
 mdurl==0.1.2 ; python_version >= "3.12" and python_version < "4" and (platform_system == "Darwin" or platform_system == "Windows") and (platform_machine == "arm64" or platform_system == "Windows")
-ml-dtypes==0.3.2 ; python_version >= "3.12" and python_version < "4" and (platform_system == "Darwin" or platform_system == "Windows") and (platform_machine == "arm64" or platform_system == "Windows")
 mpmath==1.3.0 ; python_version >= "3.12" and python_version < "4"
 namex==0.1.0 ; python_version >= "3.12" and python_version < "4" and (platform_system == "Darwin" and platform_machine == "arm64" or platform_system == "Windows")
 narwhals==1.48.1 ; python_version >= "3.12" and python_version < "4"
