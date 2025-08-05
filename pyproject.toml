@@ -25,6 +25,9 @@ dependencies = [
 [tool.poetry]
 packages = [{include = "flower_classifier_db", from = "src"}]
 
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
+
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
