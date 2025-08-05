@@ -49,7 +49,7 @@ fp_count = (pred_class_df["true_label"] != selected_label).sum()
 fp_rate = fp_count / len(pred_class_df) * 100
 
 
-st.subheader(f"Model performance on '{selected_label}'")
+st.subheader(f"Model performance on *{selected_label}*")
 
 col1, col2 = st.columns(2)
 col1.metric(
