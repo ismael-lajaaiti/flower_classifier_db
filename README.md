@@ -4,6 +4,8 @@ This project aims to produce a flower classification pipeline
 using IA libraries (TensorFlow, Pytorch), database tools (SQLAlchemy),
 project management tools (Poetry).
 
+See the [streamlit dashboard](https://flower-classifier-db.streamlit.app/) online.
+
 The only use of this project is me getting used to these different tools.
 Hopefully the end result can be something cool, but useless.
 
@@ -14,35 +16,3 @@ Hopefully the end result can be something cool, but useless.
 - Convert dataset to a DB with SQLAlchemy
 - Train a CNN model with PyTorch on this DB
 - Explore metadata and model performance with Streamlit
-
-## Installation
-
-```bash
-git clone https://github.com/ismael-lajaaiti/flower_classifier_db
-cd flower_classifier_db
-poetry install
-```
-
-## Download data
-
-```bash
-poetry run python scripts/download_data.py
-```
-
-## Building the DB
-
-```bash
-poetry run python scripts/build_db.py
-```
-
-## Run training
-
-```bash
-poetry run python -m flower_classifer_db.train
-```
-
-## Launch dashboard
-
-```bash
-poetry run streamlit run dashboard/app.py
-```
