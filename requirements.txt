@@ -4,3 +4,4 @@ tensorflow
 tensorflow-datasets
 pandas
 numpy
+plotly
