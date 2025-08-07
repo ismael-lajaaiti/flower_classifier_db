@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torchvision.models import resnet18, ResNet18_Weights
 from flower_classifier_db.dataloader import get_dataloaders_from_csv
 from flower_classifier_db.database import (
     get_engine,
@@ -10,6 +11,7 @@ from flower_classifier_db.database import (
 )
 from pathlib import Path
 from tqdm import tqdm
+from sqlalchemy import inspect
 
 # 0. Setup DB session.
 db_path = str(Path("data/flowers.db"))
@@ -30,8 +32,13 @@ def log_epoch(session, epoch, train_loss, train_acc, val_loss, val_acc):
     session.commit()
 
 
+if inspect(engine).has_table("training_logs"):
+    session.query(TrainingLog).delete()
+    session.commit()
+
+
 # 1. Configuration.
-epochs = 2
+epochs = 7
 data_dir = str(Path("data/tf_flowers"))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -39,18 +46,18 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 batch_size = 32
 split_file = "data/split.csv"
 train_loader, val_loader = get_dataloaders_from_csv(split_file, batch_size=batch_size)
-print(next(iter(train_loader)))
 
 # 3. Model setup.
-model = torch.hub.load("pytorch/vision:v0.10.0", "resnet18", pretrained=True)
+weights = ResNet18_Weights.DEFAULT
+model = resnet18(weights=weights)
 model.fc = nn.Linear(model.fc.in_features, len(class_names))
 model = model.to(device)
 
 # 4. Loss and optimizer.
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=1e-4)
+optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
-# 5. Training Loop
+# 5. Training Loop.
 for epoch in range(epochs):
     # --- Training. ---
     model.train()
@@ -97,10 +104,7 @@ for epoch in range(epochs):
         f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f} | "
         f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}"
     )
-
-# 6. Save Model
-Path("models").mkdir(exist_ok=True)
-torch.save(model.state_dict(), "models/flower_classifier.pt")
-print("[x] Model saved to models/flower_classifier.pt")
+    Path("models").mkdir(exist_ok=True)
+    torch.save(model.state_dict(), f"models/flower_classifier_epoch{epoch+1}.pt")
 
 session.close()

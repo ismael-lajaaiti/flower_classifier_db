@@ -33,8 +33,8 @@ class Prediction(Base):
     image_id = Column(Integer, nullable=False)
     true_label = Column(String, nullable=False)
     predicted_label = Column(String, nullable=False)
-    confidence = Column(Float, nullable=True)  # optional: softmax prob
-    # model_name = Column(String, nullable=True)  # optional: for future experiments
+    confidence = Column(Float, nullable=True)
+    epoch = Column(Integer, nullable=True)
 
 
 def get_engine(db_path="data/flowers.db"):
